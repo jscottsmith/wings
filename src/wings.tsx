@@ -4,9 +4,11 @@ Command: npx gltfjsx@6.2.16 --types wings-rigged-animated-2.glb
 */
 
 import * as THREE from "three";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { useGLTF, useAnimations, Instance, Instances } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
+import { SkeletonUtils } from "three-stdlib";
+import { useGraph } from "@react-three/fiber";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -31,11 +33,14 @@ type ContextType = Record<
 
 export function Wings(props: JSX.IntrinsicElements["group"]) {
   const group = useRef<THREE.Group>();
-  const { nodes, materials, animations } = useGLTF(
+  const { scene, animations } = useGLTF(
     "/wings-rigged-animated-2.glb"
   ) as GLTFResult;
 
   const { actions, names } = useAnimations(animations, group);
+  // Skinned meshes cannot be re-used in Three without cloning them
+  const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
+  const { nodes } = useGraph(clone);
 
   useEffect(() => {
     if (actions["flap"]) {

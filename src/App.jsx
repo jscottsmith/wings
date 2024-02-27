@@ -6,7 +6,8 @@ export default function App() {
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <Canvas>
-        <Wings position={[0, 1, 1]} />
+        <Wings position={[0.2, 0, 0]} />
+        <Wings position={[-0.2, 0, 0]} scale={[-1, 1, 1]} />
         {/* <fog attach="fog" color="#eee" near={1} far={10} /> */}
         <Sky
           distance={450000}
