@@ -1,14 +1,30 @@
-import { OrbitControls, PerspectiveCamera, Sky } from "@react-three/drei";
+import {
+  Instance,
+  Instances,
+  OrbitControls,
+  PerspectiveCamera,
+  Sky,
+} from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Wings } from "./wings";
+import { FlyingOk } from "./flying-ok";
+import { Vector3 } from "three";
+
+const oks = new Array(20).fill(0).map((_, i) => {
+  return new Vector3(
+    Math.random() * 10 - 10,
+    Math.random() * 10 - 10,
+    Math.random() * 10 - 10
+  );
+});
 
 export default function App() {
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <Canvas>
-        <Wings position={[0.2, 0, 0]} />
-        <Wings position={[-0.2, 0, 0]} scale={[-1, 1, 1]} />
-        {/* <fog attach="fog" color="#eee" near={1} far={10} /> */}
+        {oks.map((ok, i) => (
+          <FlyingOk position={ok} key={i} />
+        ))}
+        <fog attach="fog" color="#eee" near={1} far={100} />
         <Sky
           distance={450000}
           sunPosition={[0, 1, 0]}
