@@ -24,6 +24,7 @@ type ActionName = "flap";
 interface GLTFAction extends THREE.AnimationClip {
   name: ActionName;
 }
+
 type ContextType = Record<
   string,
   React.ForwardRefExoticComponent<

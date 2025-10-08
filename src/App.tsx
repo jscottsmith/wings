@@ -1,0 +1,30 @@
+import React from "react";
+import { Grid, OrbitControls } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Wings } from "./wings";
+import { SceneCamera } from "./SceneCamera";
+import { FlyBy } from "./FlyBy";
+
+export default function App() {
+  return (
+    <div style={{ width: "100vw", height: "100vh" }}>
+      <Canvas style={{ background: "#111" }}>
+        {/* <Wings /> */}
+        <FlyBy />
+        {/* <Grid args={[100, 100]} /> */}
+        <fog attach="fog" color="#111" near={1} far={10} />
+        {/* <Sky
+          distance={450000}
+          sunPosition={[0, 1, 0]}
+          inclination={0}
+          azimuth={0.25}
+        /> */}
+
+        {/* <OrbitControls /> */}
+        <ambientLight intensity={1.2} color="#d4c2ff" />
+        <directionalLight color="#fffcb0" position={[0, 2, -2]} />
+        <SceneCamera position={[-2, 3, -1]} lookAt={[0, 0, 0]} />
+      </Canvas>
+    </div>
+  );
+}
