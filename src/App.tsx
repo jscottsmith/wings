@@ -1,24 +1,19 @@
 import React from "react";
-import { Grid, OrbitControls } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Wings } from "./wings";
 import { SceneCamera } from "./SceneCamera";
 import { FlyBy } from "./FlyBy";
+import { SceneEvents } from "./SceneEvents";
 
 export default function App() {
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <Canvas style={{ background: "#111" }}>
+        <SceneEvents />
         {/* <Wings /> */}
         <FlyBy />
         {/* <Grid args={[100, 100]} /> */}
         <fog attach="fog" color="#111" near={3} far={8} />
-        {/* <Sky
-          distance={450000}
-          sunPosition={[0, 1, 0]}
-          inclination={0}
-          azimuth={0.25}
-        /> */}
 
         {/* <OrbitControls /> */}
         <ambientLight intensity={1.2} color="#d4c2ff" />
@@ -28,3 +23,5 @@ export default function App() {
     </div>
   );
 }
+
+useGLTF.preload("/wings-rigged-animated-2.glb");

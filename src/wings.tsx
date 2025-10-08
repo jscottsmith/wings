@@ -82,5 +82,3 @@ export function Wings({
     </group>
   );
 }
-
-// useGLTF.preload("/wings-rigged-animated-2.glb");

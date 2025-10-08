@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, Suspense } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { Wings } from "./wings";
@@ -121,16 +121,18 @@ export function FlyBy() {
 
   return (
     <group ref={groupRef}>
-      {wingInstances.map((wing) => (
-        <Wings
-          key={wing.id}
-          position={wing.position}
-          rotation={wing.rotation}
-          scale={[0.5, 0.5, 0.5]} // Scale down the wings for better visibility
-          animationStartTime={wing.animationStartTime}
-          animationSpeed={wing.animationSpeed}
-        />
-      ))}
+      <Suspense fallback={null}>
+        {wingInstances.map((wing) => (
+          <Wings
+            key={wing.id}
+            position={wing.position}
+            rotation={wing.rotation}
+            scale={[0.5, 0.5, 0.5]} // Scale down the wings for better visibility
+            animationStartTime={wing.animationStartTime}
+            animationSpeed={wing.animationSpeed}
+          />
+        ))}
+      </Suspense>
     </group>
   );
 }
