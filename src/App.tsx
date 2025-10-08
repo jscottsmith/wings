@@ -12,7 +12,7 @@ export default function App() {
         {/* <Wings /> */}
         <FlyBy />
         {/* <Grid args={[100, 100]} /> */}
-        <fog attach="fog" color="#111" near={1} far={10} />
+        <fog attach="fog" color="#111" near={3} far={8} />
         {/* <Sky
           distance={450000}
           sunPosition={[0, 1, 0]}

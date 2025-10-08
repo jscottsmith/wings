@@ -34,8 +34,18 @@ type ContextType = Record<
 
 useGLTF.preload("/wings-ok-rigged-animated-9-pole-targets.glb");
 
-export function Wings(props: JSX.IntrinsicElements["group"]) {
-  const group = useRef<THREE.Group>();
+type WingsProps = JSX.IntrinsicElements["group"] & {
+  animationSpeed?: number;
+  animationStartTime?: number;
+};
+
+export function Wings({
+  animationSpeed = 1,
+  // seconds
+  animationStartTime = 0,
+  ...props
+}: WingsProps) {
+  const group = useRef<THREE.Group>(null);
   const { scene, animations } = useGLTF(
     "/wings-ok-rigged-animated-9-pole-targets.glb"
   ) as GLTFResult;
@@ -47,9 +57,12 @@ export function Wings(props: JSX.IntrinsicElements["group"]) {
 
   useEffect(() => {
     if (actions["flap"]) {
-      actions["flap"].play();
+      const action = actions["flap"];
+      action.setEffectiveTimeScale(animationSpeed);
+      action.time = animationStartTime;
+      action.play();
     }
-  }, [actions, names]);
+  }, [actions, names, animationSpeed, animationStartTime]);
 
   return (
     <group ref={group} {...props} dispose={null}>
@@ -60,9 +73,9 @@ export function Wings(props: JSX.IntrinsicElements["group"]) {
           <primitive object={nodes.target_R} />
           <skinnedMesh
             name="wing"
-            geometry={nodes.wing.geometry}
-            material={nodes.wing.material}
-            skeleton={nodes.wing.skeleton}
+            geometry={(nodes.wing as THREE.SkinnedMesh).geometry}
+            material={(nodes.wing as THREE.SkinnedMesh).material}
+            skeleton={(nodes.wing as THREE.SkinnedMesh).skeleton}
           ></skinnedMesh>
         </group>
       </group>

@@ -8,6 +8,8 @@ interface WingInstance {
   position: [number, number, number];
   speed: number;
   rotation: [number, number, number];
+  animationStartTime: number;
+  animationSpeed: number;
 }
 
 const CYCLE_SIZE = 10;
@@ -51,11 +53,16 @@ export function FlyBy() {
       const ry = randomBetween(0, Math.PI * 0.1);
       const rz = randomBetween(0, 0);
 
+      const animationStartTime = randomBetween(0, 2);
+      const animationSpeed = randomBetween(0.5, 1.5);
+
       instances.push({
         id: i,
         position: [x, y, z],
         speed: speed,
         rotation: [rx, ry, rz],
+        animationStartTime,
+        animationSpeed,
       });
     }
 
@@ -83,22 +90,21 @@ export function FlyBy() {
       // Check boundaries and wrap to opposite edge
       const boundary = CYCLE_SIZE / 2;
 
+      // cycling movement
       if (wing.position[0] > boundary) {
         wing.position[0] = -boundary;
+        wing.position[1] = randomBetween(-CYCLE_HEIGHT / 2, CYCLE_HEIGHT / 2);
       } else if (wing.position[0] < -boundary) {
         wing.position[0] = boundary;
-      }
-
-      if (wing.position[1] > boundary) {
-        wing.position[1] = -boundary;
-      } else if (wing.position[1] < -boundary) {
-        wing.position[1] = boundary;
+        wing.position[1] = randomBetween(-CYCLE_HEIGHT / 2, CYCLE_HEIGHT / 2);
       }
 
       if (wing.position[2] > boundary) {
         wing.position[2] = -boundary;
+        wing.position[1] = randomBetween(-CYCLE_HEIGHT / 2, CYCLE_HEIGHT / 2);
       } else if (wing.position[2] < -boundary) {
         wing.position[2] = boundary;
+        wing.position[1] = randomBetween(-CYCLE_HEIGHT / 2, CYCLE_HEIGHT / 2);
       }
 
       // Update rotation with sine wave movement on x-axis
@@ -121,6 +127,8 @@ export function FlyBy() {
           position={wing.position}
           rotation={wing.rotation}
           scale={[0.5, 0.5, 0.5]} // Scale down the wings for better visibility
+          animationStartTime={wing.animationStartTime}
+          animationSpeed={wing.animationSpeed}
         />
       ))}
     </group>
