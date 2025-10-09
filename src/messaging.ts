@@ -9,6 +9,7 @@ export interface PostMessageData {
 }
 
 export const MESSAGE_TYPES = {
+  WAIT_FOR_INTERACTION: "wait_for_interaction",
   SCENE_LOADED: "scene_loaded",
   USER_CLICK: "user_click",
 } as const;
