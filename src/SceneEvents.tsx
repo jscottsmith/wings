@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useThree } from "@react-three/fiber";
-import { notifySceneLoaded, notifyUserClick } from "./messaging";
+import { notifySceneLoaded } from "./messaging";
 
 /**
  * Component that handles scene events and communication with parent window
@@ -9,15 +9,6 @@ import { notifySceneLoaded, notifyUserClick } from "./messaging";
  */
 export function SceneEvents() {
   const { scene, camera, gl } = useThree();
-
-  // Handle click events
-  useEffect(() => {
-    const handleClick = (event: MouseEvent) => {
-      notifyUserClick(event);
-    };
-    window.addEventListener("click", handleClick);
-    return () => window.removeEventListener("click", handleClick);
-  }, []);
 
   // Detect when scene is ready
   useEffect(() => {
